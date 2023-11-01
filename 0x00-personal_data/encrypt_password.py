@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Defines a hash_password function to return a hashed password
+Defines a hash_password function to return a hashed pass
 """
 import bcrypt
 from bcrypt import hashpw
