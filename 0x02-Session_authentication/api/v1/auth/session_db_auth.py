@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Define class SessionDButh
+Define class SessionDBAuth
 """
 from .session_exp_auth import SessionExpAuth
 from models.user_session import UserSession
@@ -37,9 +37,13 @@ class SessionDBAuth(SessionExpAuth):
         Return:
             user id or None if session_id is None or not a string
         """
-        user_id = UserSession.search({"session_id": session_id})
-        if user_id:
-            return user_id
+        if session_id is None or not isinstance(session_id, str):
+            return None
+
+        user_sessions = UserSession.search({"session_id": session_id})
+        if user_sessions:
+            return user_sessions[0].user_id
+
         return None
 
     def destroy_session(self, request=None):
@@ -52,8 +56,8 @@ class SessionDBAuth(SessionExpAuth):
         session_id = self.session_cookie(request)
         if not session_id:
             return False
-        user_session = UserSession.search({"session_id": session_id})
-        if user_session:
-            user_session[0].remove()
+        user_sessions = UserSession.search({"session_id": session_id})
+        if user_sessions:
+            user_sessions[0].remove()
             return True
         return False
