@@ -69,10 +69,3 @@ class SessionAuth(Auth):
             return False
         del self.user_id_by_session_id[session_cookie]
         return True
-
-    def session_cookie(self, request=None):
-        """
-        Returns the session cookie from a request
-        """
-        # Implement your session_cookie logic here
-        return request.cookies.get('session_id', None)
